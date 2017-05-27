@@ -7,12 +7,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.mobile5.midas.midas_m5.DB.DB;
+import com.mobile5.midas.midas_m5.DB.MySharedPreferences;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+    private CheckBox mAutoLoginCheckBox;
 
 
 
@@ -31,11 +34,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_login);
+            MySharedPreferences sharedPreferences = new MySharedPreferences(LoginActivity.this);
+            String[] info = sharedPreferences.getUserInfo();
+            Log.e("!!!", info[0] + ", " + info[1]);
+            if (!info[0].isEmpty() && !info[1].isEmpty()) {
+                Intent intent = new Intent(LoginActivity.this, ServiceListActivity.class);
+                startActivity(intent);
+                finish();
+            }
             id_Edit = (EditText) findViewById(R.id.id_Edit);
             pass_Edit = (EditText) findViewById(R.id.pass_Edit);
             login_Btn = (Button) findViewById(R.id.login_Btn);
             login_Btn.setOnClickListener(this);
             join_Btn = (Button) findViewById(R.id.join_Btn);
+            mAutoLoginCheckBox = (CheckBox) findViewById(R.id.auto_login);
         }
 
         @Override
@@ -112,9 +124,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 protected void onPostExecute(String s) {
                     super.onPostExecute(s);
                     if(s.equals("ok")) {
-                        Toast.makeText(getApplicationContext(), "로그인 되었습니다", Toast.LENGTH_SHORT).show();
+                        if (mAutoLoginCheckBox.isChecked()) {
+                            MySharedPreferences sharedPreferences = new MySharedPreferences(LoginActivity.this);
+                            sharedPreferences.setUserInfo(id, pass);
+                        }
                         Intent intent = new Intent(LoginActivity.this,ServiceListActivity.class);
                         startActivity(intent);
+                        finish();
                     }
                     else
                         Toast.makeText(getApplicationContext(),"사번 또는 비밀번호가 일치하지 않습니다.",Toast.LENGTH_SHORT).show();

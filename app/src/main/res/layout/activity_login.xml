@@ -45,6 +45,7 @@
         android:background="#16afca"
         android:text = "Log in"/>
     <TextView
+        android:id="@+id/forgot_pwd"
         android:layout_width="wrap_content"
         android:layout_height="17dp"
         android:layout_marginTop="20dp"
@@ -54,6 +55,16 @@
         android:textAlignment="center"
         android:text="비밀번호를 잊으셨습니까?"
         android:textColor="#16afca"/>
+    <CheckBox
+        android:layout_below="@id/forgot_pwd"
+        android:layout_alignRight="@id/login_Btn"
+        android:id="@+id/auto_login"
+        android:text="자동 로그인"
+        android:textColor="#16afca"
+        android:layout_marginTop="20dp"
+        android:buttonTint="#16afca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
