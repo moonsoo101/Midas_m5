@@ -1,0 +1,82 @@
+package com.mobile5.midas.midas_m5.Adapter;
+
+import android.content.Context;
+import android.graphics.Color;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.mobile5.midas.midas_m5.R;
+import com.mobile5.midas.midas_m5.Util.BitmapDownloaderTask;
+import com.mobile5.midas.midas_m5.dto.MyListDTO;
+
+import java.util.List;
+
+
+/**
+ * Created by wisebody on 2016. 8. 2..
+ */
+public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder> {
+
+    private List<MyListDTO> items;
+    private int itemLayout;
+    Context context;
+    ViewHolder viewHolder;
+
+
+
+    public MyListAdapter(List<MyListDTO> items, int itemLayout) {
+        this.items = items;
+        this.itemLayout = itemLayout;
+
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(itemLayout, parent, false);
+        context = parent.getContext();
+        viewHolder = new ViewHolder(v);
+        return viewHolder;
+    }
+
+
+
+    @Override
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        MyListDTO item = items.get(position);
+        holder.title.setText(item.getmTitle());
+        holder.point.setText(Integer.toString(item.getmPoint())+"P");
+//        double num = Double.parseDouble(item.getGold());
+//        DecimalFormat df = new DecimalFormat("#,##0");
+//        holder.gold.setText("Gold " + df.format(num).toString());
+        holder.progressBar.setVisibility(View.VISIBLE);
+        holder.bitmapDownloaderTask = new BitmapDownloaderTask(holder.thumb,holder.progressBar,context);
+        holder.bitmapDownloaderTask.download("http://ec2-13-124-108-18.ap-northeast-2.compute.amazonaws.com/mobile5/"+item.getmImageUrl(),holder.thumb);
+        holder.thumb.setColorFilter(Color.parseColor("#88000000"));
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
+
+
+    public static class ViewHolder extends RecyclerView.ViewHolder{
+        TextView title, point;
+        ImageView thumb;
+        ProgressBar progressBar;
+        BitmapDownloaderTask bitmapDownloaderTask;
+        public ViewHolder(View itemView) {
+            super(itemView);
+            title = (TextView) itemView.findViewById(R.id.title);
+            point = (TextView) itemView.findViewById(R.id.point);
+            thumb = (ImageView) itemView.findViewById(R.id.thumb);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
+        }
+    }
+}

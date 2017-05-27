@@ -1,11 +1,19 @@
 package com.mobile5.midas.midas_m5;
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.mobile5.midas.midas_m5.Adapter.MyListAdapter;
+import com.mobile5.midas.midas_m5.DB.DB;
+import com.mobile5.midas.midas_m5.dto.MyListDTO;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,99 +25,191 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 public class MyInfoActivity extends AppCompatActivity {
-    String url = "http://ec2-13-124-108-18.ap-northeast-2.compute.amazonaws.com/mobile5/myInfo.php";
-    TextView point, count;
-
-    public GettingPHP gPHP;
+    TextView userName, companyNum, myPoint ;
+    RecyclerView myServiceList;
+    MyListAdapter myServiceListAdapter;
+    LinearLayoutManager myServiceListManager;
+    ArrayList<MyListDTO> myServiceListDTOs = new ArrayList<>();
+    RecyclerView myDonationList;
+    MyListAdapter myDonationListAdapter;
+    LinearLayoutManager myDonationListManager;
+    ArrayList<MyListDTO> myDonationListDTOs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_info);
-
-        point = (TextView)findViewById(R.id.point);
-        count = (TextView)findViewById(R.id.count);
-
-        gPHP = new GettingPHP();
-        // MyInfo URL 전달
-        gPHP.execute(url);
+        userName = (TextView) findViewById(R.id.userName);
+        companyNum = (TextView) findViewById(R.id.companyNum);
+        myPoint = (TextView) findViewById(R.id.myPoint);
+        myServiceList = (RecyclerView) findViewById(R.id.myServiceList);
+        myServiceListAdapter = new MyListAdapter(myServiceListDTOs,R.layout.mylist_item);
+        myServiceListManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+        myServiceList.setAdapter(myServiceListAdapter);
+        myServiceList.setLayoutManager(myServiceListManager);
+        myDonationList = (RecyclerView) findViewById(R.id.myDonationList);
+        myDonationListAdapter = new MyListAdapter(myDonationListDTOs,R.layout.mylist_item);
+        myDonationListManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+        myDonationList.setAdapter(myDonationListAdapter);
+        myDonationList.setLayoutManager(myDonationListManager);
+        searchMyService("201701");
+//        searchMyDonation("201701");
     }
-
-    class GettingPHP extends AsyncTask<String, Integer, String> {
-
-        @Override
-        protected String doInBackground(String... params) {
-            StringBuilder jsonHtml = new StringBuilder();
-            try {
-
-                String data = URLEncoder.encode("ID", "UTF-8") + "=" + URLEncoder.encode("201701", "UTF-8");
-
-                // 매개변수 통해 전달된 URL
-                URL phpUrl = new URL(params[0]);
-                HttpURLConnection conn = (HttpURLConnection)phpUrl.openConnection();
-                Log.i("connect", "!!!!!!!!!!!!!!!!!!!!!");
-
-                conn.setDoOutput(true);
-                OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-
-                wr.write(data);
-                wr.flush();
-
-                if ( conn != null ) {
-                    conn.setConnectTimeout(10000);
-                    conn.setUseCaches(false);
-
-                    // DB에 연결
-                    if ( conn.getResponseCode() == HttpURLConnection.HTTP_OK ) {
-                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-                        while ( true ) {
-                            String line = br.readLine();
-                            if ( line == null )
-                                break;
-                            //데이터 읽어오기
-                            jsonHtml.append(line + "\n");
-                        }
-                        br.close();
-                    }
-                    conn.disconnect();
+    protected void showMyService(String jsonResult){
+        try {
+            String[] title = null;
+            int[] point = null;
+            String[] imgURL = null;
+            int[] serviceID = null;
+            String[] location = null;
+            String[] description = null;
+            boolean[] state = null;
+            if (myServiceListDTOs != null)
+                myServiceListDTOs.clear();
+            JSONObject jsonObj = new JSONObject(jsonResult);
+            JSONArray posts = jsonObj.getJSONArray("result");
+            if(posts.length()>0) {
+                title = new String[posts.length()];
+                point = new int[posts.length()];
+                imgURL = new String[posts.length()];
+                serviceID = new int[posts.length()];
+                location = new String[posts.length()];
+                description = new String[posts.length()];
+                state = new boolean[posts.length()];
+                for (int i = 0; i < posts.length(); i++) {
+                    JSONObject c = posts.getJSONObject(i);
+                    title[i] = c.getString("Title");
+                    point[i] = Integer.parseInt(c.getString("Point"));
+                    imgURL[i] = c.getString("Img");
+                    serviceID[i] = Integer.parseInt(c.getString("ServiceID"));
+                    location[i] = c.getString("Location");
+                    description[i] = c.getString("Description");
+                    state[i] = Boolean.parseBoolean(c.getString("State"));
+                    myServiceListDTOs.add(new MyListDTO(serviceID[i],title[i], point[i], imgURL[i], location[i], description[i], state[i]));
                 }
-            } catch ( Exception e ) {
-                e.printStackTrace();
             }
-            return jsonHtml.toString();
+            myServiceListAdapter.notifyDataSetChanged();
         }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            try {
-
-                // PHP에서 받아온 JSON 데이터를 JSON오브젝트로 변환
-                JSONObject jObject = new JSONObject(s);
-                Log.e("dddddd", jObject.toString());
-
-                //  JSON key 값 확인 후 등록 필요
-                JSONArray results = jObject.getJSONArray("result");
-                String temppoint = "";
-                String tempcount = "";
-                //jObject.get("status");
-                //jObject.get("num_result");
-
-
-                for ( int i = 0; i < results.length(); ++i ) {
-                    JSONObject temp = results.getJSONObject(i);
-                    temp.get("ID");
-                    temp.get("Password");
-                    temppoint += temp.get("Point");
-                    tempcount += temp.get("Name");
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    protected void showMyDonation(String jsonResult){
+        try {
+            String[] title = null;
+            int[] point = null;
+            String[] imgURL = null;
+            int[] serviceID = null;
+            String[] location = null;
+            String[] description = null;
+            boolean[] state = null;
+            if (myServiceListDTOs != null)
+                myServiceListDTOs.clear();
+            JSONObject jsonObj = new JSONObject(jsonResult);
+            JSONArray posts = jsonObj.getJSONArray("result");
+            if(posts.length()>0) {
+                title = new String[posts.length()];
+                point = new int[posts.length()];
+                imgURL = new String[posts.length()];
+                serviceID = new int[posts.length()];
+                location = new String[posts.length()];
+                description = new String[posts.length()];
+                state = new boolean[posts.length()];
+                for (int i = 0; i < posts.length(); i++) {
+                    JSONObject c = posts.getJSONObject(i);
+                    title[i] = c.getString("Title");
+                    point[i] = Integer.parseInt(c.getString("Point"));
+                    imgURL[i] = c.getString("Img");
+                    serviceID[i] = Integer.parseInt(c.getString("ServiceID"));
+                    location[i] = c.getString("Location");
+                    description[i] = c.getString("Description");
+                    state[i] = Boolean.parseBoolean(c.getString("State"));
+                    myServiceListDTOs.add(new MyListDTO(serviceID[i],title[i], point[i], imgURL[i], location[i], description[i], state[i]));
                 }
-                point.setText(temppoint);
-                point.setText(tempcount);
-            } catch (JSONException e) {
-                e.printStackTrace();
+            }
+            myServiceListAdapter.notifyDataSetChanged();
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    private void searchMyService(String id){
+
+        class searchData extends AsyncTask<String, Void, String> {
+            String id;
+            /*WeakReference<Activity> mActivityReference;
+
+            public searchData(Activity activity){
+                this.mActivityReference = new WeakReference<Activity>(activity);
+
+            }*/
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                showMyService(s);
+            }
+            @Override
+            protected String doInBackground(String... params) {
+
+                id = (String) params[0];
+                String[] posts = {id};
+                DB db = new DB("myServiceList.php");
+                String result = db.post(posts);
+                Log.d("MyInfoResult",result);
+                return result;
             }
         }
+        //searchData task = new searchData(Application.this);
+        searchData task = new searchData();
+        task.execute(id);
+    }
+    private void searchMyDonation(String id){
+
+        class searchData extends AsyncTask<String, Void, String> {
+            String id;
+            /*WeakReference<Activity> mActivityReference;
+
+            public searchData(Activity activity){
+                this.mActivityReference = new WeakReference<Activity>(activity);
+
+            }*/
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                showMyService(s);
+            }
+            @Override
+            protected String doInBackground(String... params) {
+
+                id = (String) params[0];
+                String[] posts = {id};
+                DB db = new DB("myDonationList.php");
+                String result = db.post(posts);
+                Log.d("MyDonationListResult",result);
+                return result;
+            }
+        }
+        //searchData task = new searchData(Application.this);
+        searchData task = new searchData();
+        task.execute(id);
     }
 }

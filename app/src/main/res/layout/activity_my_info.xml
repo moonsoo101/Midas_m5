@@ -1,69 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mobile5.midas.midas_m5.MyInfoActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#ffffff">
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
-        >
-
-
-        <LinearLayout
-            android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/infoCont1"
+        android:layout_marginTop="14dp"
+        android:layout_marginLeft="14dp">
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:background="#ADD8E6"
-                android:gravity="center_horizontal"
-                android:padding="20dp"
-                android:text="활동 횟수 >"
-                android:textSize="20dp" />
-
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#FFF8DC"
-                android:gravity="center_horizontal"
-                android:padding="20dp"
-                android:text="적립포인트 >"
-                android:textSize="20dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
+            android:id="@+id/userName"
+            android:text="정문수"
+            android:textSize="25sp"
+            android:textColor="#de000000"/>
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/count"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:background="#ADD8E6"
-                android:gravity="center_horizontal"
-                android:padding="20dp"
-                android:textSize="20dp" />
-
-            <TextView
-                android:id="@+id/point"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#FFF8DC"
-                android:gravity="center_horizontal"
-                android:padding="20dp"
-                android:textSize="20dp" />
-        </LinearLayout>
+            android:id="@+id/companyNum"
+            android:textColor="#4c000000"
+            android:textSize="15sp"
+            android:text="201701"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:id="@+id/pointT"
+            android:text="포인트"
+            android:textSize="25sp"
+            android:textColor="#de000000"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/myPoint"
+            android:layout_toRightOf="@+id/pointT"
+            android:text="2000p"
+            android:textSize="15sp"
+            android:textColor="#4c000000" />
     </LinearLayout>
-
-</android.support.constraint.ConstraintLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="27sp"
+        android:background="#eeeeee"
+        android:id="@+id/myServiceListTitle"
+        android:layout_below="@+id/infoCont1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="14.4sp"
+                android:layout_height="14.4sp"
+                android:layout_marginLeft="14.3sp"
+                android:layout_marginRight="6.4sp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/icn_me_mystars"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#686565"
+                android:text="나의 봉사활동" />
+        </LinearLayout>
+    </FrameLayout>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:id="@+id/myServiceList"
+        android:layout_below="@+id/myServiceListTitle"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="27sp"
+        android:background="#eeeeee"
+        android:id="@+id/myDonationListTitle"
+        android:layout_below="@+id/myServiceList">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="14.4sp"
+                android:layout_height="14.4sp"
+                android:layout_marginLeft="14.3sp"
+                android:layout_marginRight="6.4sp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/icn_me_mystars"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#686565"
+                android:text="나의 기부활동" />
+        </LinearLayout>
+    </FrameLayout>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:id="@+id/myDonationList"
+        android:layout_below="@+id/myDonationListTitle"/>
+    </RelativeLayout>
