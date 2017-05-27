@@ -19,9 +19,9 @@
         </activity>
         <activity android:name=".MyInfoActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".VoluntaryListActivity"
+        <activity android:name=".ServiceListActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".VoluntaryDetailActivity"
+        <activity android:name=".ServiceDetailActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".DonationListActivity"
             android:screenOrientation="portrait"/>
