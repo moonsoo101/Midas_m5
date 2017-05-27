@@ -43,6 +43,12 @@ public class DonationArrayAdapter extends ArrayAdapter<DonationDTO> {
         TextView title = (TextView) v.findViewById(R.id.donation_title);
         TextView location = (TextView) v.findViewById(R.id.donation_location);
         TextView point = (TextView) v.findViewById(R.id.donation_total_point);
-        return super.getView(position, convertView, parent);
+        if (item != null) {
+            Picasso.with(mContext).load("http://ec2-13-124-108-18.ap-northeast-2.compute.amazonaws.com/mobile5/" + item.getImageUrl()).into(image);
+            title.setText(item.getTitle());
+            location.setText(item.getLocation());
+            point.setText(String.valueOf(item.getTotalPoint()));
+        }
+        return v;
     }
 }

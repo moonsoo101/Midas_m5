@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.mobile5.midas.midas_m5.DB.DB;
@@ -38,8 +39,46 @@ public class ServiceListActivity extends AppCompatActivity {
         mServiceListView.setAdapter(mServiceArrayAdapter);
         mServiceListView.setOnItemClickListener(mOnItemClickListener);
 
+        Button btn1 = (Button) findViewById(R.id.service_btn);
+        btn1.setOnClickListener(mOnClickListener);
+        Button btn2 = (Button) findViewById(R.id.donation_btn);
+        btn2.setOnClickListener(mOnClickListener);
+        Button btn3 = (Button) findViewById(R.id.mypage_btn);
+        btn3.setOnClickListener(mOnClickListener);
+        Button btn4 = (Button) findViewById(R.id.qr_btn);
+        btn4.setOnClickListener(mOnClickListener);
+
         new GetServiceList().execute();
     }
+
+    private View.OnClickListener mOnClickListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.service_btn:
+                {
+                    break;
+                }
+                case R.id.donation_btn:
+                {
+                    Intent intent = new Intent(ServiceListActivity.this, DonationListActivity.class);
+                    startActivity(intent);
+                    break;
+                }
+                case R.id.mypage_btn:
+                {
+                    Intent intent = new Intent(ServiceListActivity.this, MyInfoActivity.class);
+                    startActivity(intent);
+                    break;
+                }
+                case R.id.qr_btn:
+                {
+                    break;
+                }
+            }
+        }
+    };
 
     private AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
