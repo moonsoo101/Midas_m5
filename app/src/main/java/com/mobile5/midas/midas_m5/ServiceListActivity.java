@@ -9,7 +9,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.mobile5.midas.midas_m5.DB.DB;
 import com.mobile5.midas.midas_m5.dto.ServiceDTO;
 import com.mobile5.midas.midas_m5.list.ServiceArrayAdapter;
@@ -51,6 +54,15 @@ public class ServiceListActivity extends AppCompatActivity {
         new GetServiceList().execute();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == IntentIntegrator.REQUEST_CODE) {
+            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            Toast.makeText(ServiceListActivity.this, result.getContents(), Toast.LENGTH_LONG).show();
+        }
+    }
+
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
 
         @Override
@@ -74,6 +86,7 @@ public class ServiceListActivity extends AppCompatActivity {
                 }
                 case R.id.qr_btn:
                 {
+                    new IntentIntegrator(ServiceListActivity.this).setCaptureActivity(QRCodeScanActivity.class).setOrientationLocked(false).initiateScan();
                     break;
                 }
             }
