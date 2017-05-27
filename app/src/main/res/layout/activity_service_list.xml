@@ -10,12 +10,15 @@
     <ListView
         android:id="@+id/service_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btnCont"/>
 
     <LinearLayout
         android:orientation="horizontal"
+        android:id="@+id/btnCont"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
+        android:weightSum="4"
         android:layout_height="wrap_content">
 
         <Button
