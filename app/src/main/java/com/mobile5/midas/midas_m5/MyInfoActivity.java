@@ -121,6 +121,7 @@ public class MyInfoActivity extends AppCompatActivity {
                     JSONObject c = posts.getJSONObject(i);
                     title[i] = c.getString("Title");
                     imgURL[i] = c.getString("Img");
+                    point[i] = Integer.parseInt(c.getString("Point"));
                     serviceID[i] = Integer.parseInt(c.getString("ServiceID"));
                     location[i] = c.getString("Location");
                     description[i] = c.getString("Description");

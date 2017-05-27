@@ -1,7 +1,9 @@
 package com.mobile5.midas.midas_m5.dto;
 
 
-public class MyListDTO {
+import java.io.Serializable;
+
+public class MyListDTO implements Serializable {
     private int mID;
     private String mTitle;
     private String mImageUrl;
@@ -20,6 +22,7 @@ public class MyListDTO {
         mDescription = description;
         mState = state;
     }
+
 
     public int getmID() {
         return mID;

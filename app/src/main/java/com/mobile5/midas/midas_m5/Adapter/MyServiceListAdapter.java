@@ -1,6 +1,7 @@
 package com.mobile5.midas.midas_m5.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,8 +12,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mobile5.midas.midas_m5.R;
+import com.mobile5.midas.midas_m5.ServiceDetailActivity;
 import com.mobile5.midas.midas_m5.Util.BitmapDownloaderTask;
 import com.mobile5.midas.midas_m5.dto.MyListDTO;
+import com.mobile5.midas.midas_m5.dto.ServiceDTO;
 
 import java.util.List;
 
@@ -47,7 +50,7 @@ public class MyServiceListAdapter extends RecyclerView.Adapter<MyServiceListAdap
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        MyListDTO item = items.get(position);
+        final MyListDTO item = items.get(position);
         holder.title.setText(item.getmTitle());
 //        double num = Double.parseDouble(item.getGold());
 //        DecimalFormat df = new DecimalFormat("#,##0");
@@ -56,6 +59,14 @@ public class MyServiceListAdapter extends RecyclerView.Adapter<MyServiceListAdap
         holder.bitmapDownloaderTask = new BitmapDownloaderTask(holder.thumb,holder.progressBar,context);
         holder.bitmapDownloaderTask.download("http://ec2-13-124-108-18.ap-northeast-2.compute.amazonaws.com/mobile5/"+item.getmImageUrl(),holder.thumb);
         holder.thumb.setColorFilter(Color.parseColor("#88000000"));
+        holder.thumb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context.getApplicationContext(), ServiceDetailActivity.class);
+                intent.putExtra("item", new ServiceDTO(item.getmID(), item.getmTitle(), item.getmLocation(), item.getmPoint(), item.getmDescription(), item.getmImageUrl(), item.ismState()));
+                context.startActivity(intent);
+            }
+        });
     }
 
 
