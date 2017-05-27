@@ -68,7 +68,12 @@ public class DonationDetailActivity extends AppCompatActivity  implements View.O
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                // 초기 개인 포인트 불러오기 기입 필요
+                // 포인트 부족으로 인한 기부 불가능
+                if(s.equals("거지")) {
+                    Toast.makeText(getApplicationContext(),"포인트가 부족합니다.",Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getApplicationContext(),Point+" 포인트를 기부하였습니다.",Toast.LENGTH_SHORT).show();
+                }
 
             }
 
@@ -84,6 +89,7 @@ public class DonationDetailActivity extends AppCompatActivity  implements View.O
                 String[] posts = {UserID, DonateID, Point};
                 DB db = new DB("donation.php");
                 String result = db.post(posts);
+
                 Log.d(result,"Donation result~~~~~~");
                 return result;
             }
@@ -105,7 +111,6 @@ public class DonationDetailActivity extends AppCompatActivity  implements View.O
                         public void onClick(DialogInterface dialog, int which) {
                             String inputValue = etEdit.getText().toString();
                             InsertToDatabase(String.valueOf(sharedPreferences.getUserInfo()), String.valueOf(donateInfo.getId()), inputValue);
-                            Toast.makeText(DonationDetailActivity.this, inputValue + " 포인트를 기부하셨습니다", Toast.LENGTH_SHORT).show();
                         }
                     });
                     dialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -115,7 +120,6 @@ public class DonationDetailActivity extends AppCompatActivity  implements View.O
                         }
                     });
                     dialog.show();
-
                 }
             }
     }
