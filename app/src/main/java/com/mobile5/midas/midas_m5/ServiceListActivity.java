@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.mobile5.midas.midas_m5.DB.DB;
+import com.mobile5.midas.midas_m5.DB.MySharedPreferences;
 import com.mobile5.midas.midas_m5.dto.ServiceDTO;
 import com.mobile5.midas.midas_m5.list.ServiceArrayAdapter;
 
@@ -26,6 +27,7 @@ import org.json.simple.parser.ParseException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class ServiceListActivity extends AppCompatActivity {
     ListView mServiceListView;
@@ -61,7 +63,37 @@ public class ServiceListActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == IntentIntegrator.REQUEST_CODE) {
             IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-            Toast.makeText(ServiceListActivity.this, result.getContents(), Toast.LENGTH_LONG).show();
+            int serviceId = Integer.parseInt(result.getContents());
+            MySharedPreferences pref = new MySharedPreferences(ServiceListActivity.this);
+            String title = "";
+            int point = 0;
+            for (ServiceDTO item : mServiceList) {
+                if (item.getId() == serviceId) {
+                    title = item.getTitle();
+                    point = item.getPointPerHour();
+                }
+            }
+            boolean isMyService = false;
+            try {
+                isMyService = new IsMyService().execute(serviceId).get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            if (isMyService) {
+                if (pref.isServiceIng(serviceId)) {
+                    int times = pref.getServiceTime();
+                    String[] info = pref.getUserInfo();
+                    new AddPoint().execute(Integer.parseInt(info[0]), point * times);
+                    Toast.makeText(ServiceListActivity.this, title + " 봉사활동을 종료합니다. " + (point * times) + " 적립되었습니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    pref.startService(serviceId);
+                    Toast.makeText(ServiceListActivity.this, title + " 봉사활동을 시작합니다.", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(ServiceListActivity.this, "먼저 신청을 해주세요.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -108,6 +140,33 @@ public class ServiceListActivity extends AppCompatActivity {
             }
         }
     };
+
+    private class AddPoint extends AsyncTask<Integer, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Integer... params) {
+            int id = params[0];
+            int point = params[1];
+            DB db = new DB("service_complete.php");
+            String[] posts = {String.valueOf(id), String.valueOf(point)};
+            db.post(posts);
+            return null;
+        }
+    }
+
+    private class IsMyService extends AsyncTask<Integer, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Integer... params) {
+            int serviceId = params[0];
+            MySharedPreferences pref = new MySharedPreferences(ServiceListActivity.this);
+            String[] info = pref.getUserInfo();
+            DB db = new DB("isMyService.php");
+            String[] posts = {info[0], String.valueOf(serviceId)};
+            String result = db.post(posts);
+            return result.equals("ok");
+        }
+    }
 
     private class GetServiceList extends AsyncTask<Void, Integer, List<ServiceDTO>> {
 
