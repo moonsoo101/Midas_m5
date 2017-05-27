@@ -11,7 +11,7 @@
 
         <TextView
             android:id="@+id/donation_title"
-            android:textSize="40dp"
+            android:textSize="30dp"
             android:textColor="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -20,7 +20,7 @@
             android:id="@+id/donation_state"
             android:textColor="@android:color/white"
             android:layout_toRightOf="@id/donation_title"
-            android:textSize="40dp"
+            android:textSize="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -28,7 +28,7 @@
             android:id="@+id/donation_location"
             android:textColor="@android:color/white"
             android:textSize="20dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_below="@id/donation_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -36,7 +36,7 @@
         <TextView
             android:id="@+id/donation_total_point"
             android:textColor="@android:color/white"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:layout_alignParentBottom="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

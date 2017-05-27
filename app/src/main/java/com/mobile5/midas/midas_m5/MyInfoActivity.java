@@ -27,7 +27,6 @@ import java.util.ArrayList;
 
 public class MyInfoActivity extends AppCompatActivity {
     TextView userName, companyNum, myPoint ;
-    Button logout_Btn;
     RecyclerView myServiceList;
     MyServiceListAdapter myServiceListAdapter;
     LinearLayoutManager myServiceListManager;
@@ -48,7 +47,6 @@ public class MyInfoActivity extends AppCompatActivity {
         userName = (TextView) findViewById(R.id.userName);
         companyNum = (TextView) findViewById(R.id.companyNum);
         myPoint = (TextView) findViewById(R.id.myPoint);
-        logout_Btn = (Button) findViewById(R.id.logout_Btn);
         myServiceList = (RecyclerView) findViewById(R.id.myServiceList);
         myServiceListAdapter = new MyServiceListAdapter(myServiceListDTOs,R.layout.mylist_item);
         myServiceListManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);

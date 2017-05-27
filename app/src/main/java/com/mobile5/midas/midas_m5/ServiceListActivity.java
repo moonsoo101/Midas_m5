@@ -110,6 +110,7 @@ public class ServiceListActivity extends AppCompatActivity {
                 {
                     Intent intent = new Intent(ServiceListActivity.this, DonationListActivity.class);
                     startActivity(intent);
+                    finish();
                     break;
                 }
                 case R.id.mypage_btn:
