@@ -1,6 +1,7 @@
 package com.mobile5.midas.midas_m5;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mobile5.midas.midas_m5.DB.DB;
+import com.mobile5.midas.midas_m5.DB.MySharedPreferences;
 import com.mobile5.midas.midas_m5.dto.ServiceDTO;
 import com.squareup.picasso.Picasso;
 
@@ -20,6 +22,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
     TextView title, where, point, info;
     ImageView img;
     Button regist;
+    MySharedPreferences sharedPreferences;
 
     ServiceDTO serviceInfo;
 
@@ -27,6 +30,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_detail);
+        sharedPreferences = new MySharedPreferences(ServiceDetailActivity.this);
 
         title = (TextView)findViewById(R.id.serviceName);
         where = (TextView)findViewById(R.id.where);
@@ -45,27 +49,27 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
         point.setText(String.valueOf(serviceInfo.getPointPerHour()));
         info.setText(serviceInfo.getDetail());
 
-        searchToDatabase(String.valueOf(serviceInfo.getId()), "201701");
+        searchToDatabase(String.valueOf(sharedPreferences.getUserInfo()), String.valueOf(serviceInfo.getId()));
 
     }
 
     @Override
     public void onClick(View v) {
-/*        int id = v.getId();
-        if (id == R.id.btn1) {
-            Intent intent = new Intent(this, SingleCalendarActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.btn2) {
-            Intent intent = new Intent(this, MultiCalendarActivity.class);
-            startActivity(intent);
-        }*/
+        int id = v.getId();
+        if (id == R.id.regist) {
+            if(regist.getText().equals("신청하기")) {
+
+            }else {
+
+            }
+        }
     }
 
     private void searchToDatabase(String UserID, String ServiceID){
 
         class searchData extends AsyncTask<String, Void, String> {
-            String ServiceID;
             String UserID;
+            String ServiceID;
 
             @Override
             protected void onPreExecute() {
@@ -78,17 +82,22 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
                 if(s.equals("ok")) {
                     Toast.makeText(getApplicationContext(),"취소 가능한 행사입니다.",Toast.LENGTH_SHORT).show();
                     regist.setText("취소하기");
+                    regist.setBackgroundColor(Color.parseColor("#FFB6C1"));
                 }
                 else {
                     Toast.makeText(getApplicationContext(),"신청 가능한 행사입니다.",Toast.LENGTH_SHORT).show();
                     regist.setText("신청하기");
+                    regist.setBackgroundColor(Color.parseColor("#4169E1"));
                 }
             }
             @Override
             protected String doInBackground(String... params) {
 
-                ServiceID = params[0];
-                UserID = "201701";
+                String[] info = sharedPreferences.getUserInfo();
+
+                UserID = info[0];
+                ServiceID = params[1];
+
                 //UserID = params[1];
                 //String[] posts = {ServiceID, UserID};
                 String[] posts = {UserID, ServiceID};
