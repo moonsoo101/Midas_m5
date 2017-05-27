@@ -1,6 +1,8 @@
 package com.mobile5.midas.midas_m5.dto;
 
-public class DonationDTO {
+import java.io.Serializable;
+
+public class DonationDTO implements Serializable{
     private int mId;
     private String mTitle;
     private String mLocation;

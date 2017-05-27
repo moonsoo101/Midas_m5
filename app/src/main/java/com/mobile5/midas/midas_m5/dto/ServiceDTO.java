@@ -1,6 +1,8 @@
 package com.mobile5.midas.midas_m5.dto;
 
-public class ServiceDTO {
+import java.io.Serializable;
+
+public class ServiceDTO implements Serializable{
     private int mId;
     private String mTitle;
     private String mLocation;

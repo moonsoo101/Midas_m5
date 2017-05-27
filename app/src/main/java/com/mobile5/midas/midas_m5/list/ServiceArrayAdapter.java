@@ -2,6 +2,7 @@ package com.mobile5.midas.midas_m5.list;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -46,11 +47,11 @@ public class ServiceArrayAdapter extends ArrayAdapter<ServiceDTO> {
         TextView state = (TextView) v.findViewById(R.id.service_state);
         TextView detail = (TextView) v.findViewById(R.id.service_detail);
         if (item != null) {
-            Picasso.with(mContext).load(item.getImageUrl()).into(image);
+            Picasso.with(mContext).load("http://ec2-13-124-108-18.ap-northeast-2.compute.amazonaws.com/mobile5/" + item.getImageUrl()).into(image);
             image.setColorFilter(Color.parseColor("#88000000"));
             title.setText(item.getTitle());
             location.setText(item.getLocation());
-            point.setText(item.getPointPerHour());
+            point.setText(String.valueOf(item.getPointPerHour()));
             state.setText(item.getState() ? "진행중" : "종료");
             detail.setText(item.getDetail());
         }

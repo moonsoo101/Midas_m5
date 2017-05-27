@@ -4,10 +4,14 @@ import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.mobile5.midas.midas_m5.R;
 import com.mobile5.midas.midas_m5.dto.DonationDTO;
 import com.squareup.picasso.Picasso;
 
@@ -29,6 +33,16 @@ public class DonationArrayAdapter extends ArrayAdapter<DonationDTO> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        View v = convertView;
+        if (v == null) {
+            LayoutInflater li = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            v = li.inflate(mResId,null);
+        }
+        DonationDTO item = getItem(position);
+        ImageView image = (ImageView) v.findViewById(R.id.donation_image);
+        TextView title = (TextView) v.findViewById(R.id.donation_title);
+        TextView location = (TextView) v.findViewById(R.id.donation_location);
+        TextView point = (TextView) v.findViewById(R.id.donation_total_point);
         return super.getView(position, convertView, parent);
     }
 }
