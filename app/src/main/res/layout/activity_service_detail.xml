@@ -1,57 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="8dp"
     android:background="#ffffff"
     tools:context="com.mobile5.midas.midas_m5.ServiceDetailActivity">
 
 
     <TextView
         android:id="@+id/serviceName"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#ADD8E6"
-        android:gravity="center_horizontal"
-        android:padding="10dp"
-        android:textSize="20dp" />
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#16afca"
+        android:gravity="center"
+        android:text="aaaa"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
 
     <ImageView
         android:id="@+id/poster"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:gravity="center_horizontal"
-        android:padding="10dp" />
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/serviceName"
+        />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/input1"
+        android:layout_below="@+id/poster">
 
         <TextView
             android:text="장소 : "
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:textColor="#16afca"
             android:background="#ffffff"
-            android:padding="10dp"
+            android:textAlignment="viewEnd"
             android:layout_weight="3"
-            android:textSize="10dp" />
+
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/where"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#ADD8E6"
-            android:padding="10dp"
+            android:background="#16afca"
             android:layout_weight="1"
-            android:textSize="10dp" />
+            android:textSize="13dp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/input2"
+        android:layout_below="@+id/input1"
         android:orientation="horizontal">
 
         <TextView
@@ -59,49 +64,50 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#ffffff"
-            android:padding="10dp"
+            android:textColor="#16afca"
+            android:textAlignment="viewEnd"
             android:layout_weight="3"
-            android:textSize="10dp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/point"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#ADD8E6"
-            android:padding="10dp"
+            android:background="#16afca"
             android:layout_weight="1"
-            android:textSize="10dp" />
+            android:textSize="13sp" />
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
+        android:orientation="horizontal"
+        android:layout_below="@+id/input2"
+        android:id="@+id/input3">
         <TextView
             android:text="상세설명 : "
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#ffffff"
-            android:padding="20dp"
+            android:textColor="#16afca"
             android:layout_weight="3"
-            android:textSize="10dp" />
-
+            android:textAlignment="viewEnd"
+            android:textSize="14sp" />
         <TextView
             android:id="@+id/Info"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#ADD8E6"
-            android:padding="20dp"
+            android:background="#16afca"
             android:layout_weight="1"
-            android:textSize="10dp" />
-
+            android:textSize="13sp" />
     </LinearLayout>
-
     <Button
         android:id="@+id/regist"
-        android:gravity="center_horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#16afca"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        style="?android:attr/borderlessButtonStyle"/>
 
-</LinearLayout>
+</RelativeLayout>

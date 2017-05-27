@@ -119,7 +119,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
                 else {
                     Toast.makeText(getApplicationContext(),"신청 가능한 행사입니다.",Toast.LENGTH_SHORT).show();
                     regist.setText("신청하기");
-                    regist.setBackgroundColor(Color.parseColor("#4169E1"));
+                    regist.setBackgroundColor(Color.parseColor("#16afca"));
                 }
             }
             @Override
@@ -205,7 +205,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements View.OnC
                 if(s.equals("ok")) {
                     Toast.makeText(getApplicationContext(),"취소되었습니다. ",Toast.LENGTH_SHORT).show();
                     regist.setText("신청하기");
-                    regist.setBackgroundColor(Color.parseColor("#4169E1"));
+                    regist.setBackgroundColor(Color.parseColor("#16afca"));
                 }
                 else {
                     Toast.makeText(getApplicationContext(),"오류가 발생하였습니다.",Toast.LENGTH_SHORT).show();
