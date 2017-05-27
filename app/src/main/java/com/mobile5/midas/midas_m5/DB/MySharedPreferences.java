@@ -9,6 +9,7 @@ public class MySharedPreferences {
     private final String NAME = "user";
     private final String ID = "id";
     private final String PWD = "password";
+    private final String AUTO_LOGIN = "auto_login";
 
     private Context mContext;
 
@@ -32,11 +33,15 @@ public class MySharedPreferences {
         return array;
     }
 
-    public void removeUserInfo() {
+    public void setAutoLogin(boolean isAutoLogin) {
         SharedPreferences pref = mContext.getSharedPreferences(NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
-        editor.remove(ID);
-        editor.remove(PWD);
+        editor.putBoolean(AUTO_LOGIN, isAutoLogin);
         editor.commit();
+    }
+
+    public boolean isAutoLogin() {
+        SharedPreferences pref = mContext.getSharedPreferences(NAME, Context.MODE_PRIVATE);
+        return pref.getBoolean(AUTO_LOGIN, false);
     }
 }

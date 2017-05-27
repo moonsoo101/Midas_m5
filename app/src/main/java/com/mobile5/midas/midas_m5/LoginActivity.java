@@ -35,9 +35,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_login);
             MySharedPreferences sharedPreferences = new MySharedPreferences(LoginActivity.this);
-            String[] info = sharedPreferences.getUserInfo();
-            Log.e("!!!", info[0] + ", " + info[1]);
-            if (!info[0].isEmpty() && !info[1].isEmpty()) {
+            if (sharedPreferences.isAutoLogin()) {
                 Intent intent = new Intent(LoginActivity.this, ServiceListActivity.class);
                 startActivity(intent);
                 finish();
@@ -124,9 +122,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 protected void onPostExecute(String s) {
                     super.onPostExecute(s);
                     if(s.equals("ok")) {
+                        MySharedPreferences sharedPreferences = new MySharedPreferences(LoginActivity.this);
+                        sharedPreferences.setUserInfo(id, pass);
                         if (mAutoLoginCheckBox.isChecked()) {
-                            MySharedPreferences sharedPreferences = new MySharedPreferences(LoginActivity.this);
-                            sharedPreferences.setUserInfo(id, pass);
+                            sharedPreferences.setAutoLogin(true);
                         }
                         Intent intent = new Intent(LoginActivity.this,ServiceListActivity.class);
                         startActivity(intent);
