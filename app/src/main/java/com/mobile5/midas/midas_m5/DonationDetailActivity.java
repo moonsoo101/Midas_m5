@@ -34,7 +34,7 @@ public class DonationDetailActivity extends AppCompatActivity  implements View.O
         setContentView(R.layout.activity_donation_detail);
         sharedPreferences = new MySharedPreferences(DonationDetailActivity.this);
 
-        title = (TextView)findViewById(R.id.serviceName);
+        title = (TextView)findViewById(R.id.donateName);
         where = (TextView)findViewById(R.id.where);
         totalPoint = (TextView)findViewById(R.id.totalpoint);
         donate = (Button)findViewById(R.id.donate);
@@ -50,7 +50,7 @@ public class DonationDetailActivity extends AppCompatActivity  implements View.O
         Picasso.with(this).load("http://ec2-13-124-108-18.ap-northeast-2.compute.amazonaws.com/mobile5/" + donateInfo.getImageUrl()).into(img);
         where.setText(donateInfo.getLocation());
         totalPoint.setText(String.valueOf(donateInfo.getTotalPoint()));
-        etEdit = new EditText(this);
+
     }
 
     private void InsertToDatabase(String UserID, String DonateID, String Point){
@@ -102,6 +102,7 @@ public class DonationDetailActivity extends AppCompatActivity  implements View.O
     public void onClick(View v) {
             switch(v.getId()) {
                 case R.id.donate: {
+                    etEdit = new EditText(this);
                     AlertDialog.Builder dialog = new AlertDialog.Builder(this);
                     dialog.setTitle("기부 포인트 입력");
                     dialog.setView(etEdit);

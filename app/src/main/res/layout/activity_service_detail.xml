@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="8dp"
+    android:background="#ffffff"
     tools:context="com.mobile5.midas.midas_m5.ServiceDetailActivity">
 
 

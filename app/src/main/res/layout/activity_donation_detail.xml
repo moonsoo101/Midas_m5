@@ -9,7 +9,7 @@
     tools:context="com.mobile5.midas.midas_m5.DonationDetailActivity">
 
     <TextView
-        android:id="@+id/serviceName"
+        android:id="@+id/donateName"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#ADD8E6"
