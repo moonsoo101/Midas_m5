@@ -1,13 +1,18 @@
 package com.mobile5.midas.midas_m5;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.mobile5.midas.midas_m5.dto.ServiceDTO;
+import com.squareup.picasso.Picasso;
 
 public class ServiceDetailActivity extends AppCompatActivity {
 
     TextView title, where, point, info;
-    //ImageView img;
+    ImageView img;
     ServiceDTO serviceInfo;
 
     @Override
@@ -20,42 +25,16 @@ public class ServiceDetailActivity extends AppCompatActivity {
         point = (TextView)findViewById(R.id.point);
         info = (TextView)findViewById(R.id.Info);
 
-        // img = (ImageView)findViewById(R.id.poster);
+         img = (ImageView)findViewById(R.id.poster);
 
-        serviceInfo = new ServiceDTO(1, "17th Run", "seoul", 5000,
-                "서울 지역구민과 함께하는 달리기 행사","http://i.imgur.com/DvpvklR.png", true );
+        Intent intent = getIntent();
+        serviceInfo = (ServiceDTO) intent.getSerializableExtra("item");
 
-        title.setText(serviceInfo.mTitle);
-        //피카소 불러오기 주석처리
-/*        Picasso.with(this)
-                .load(serviceInfo.mImageUrl)
-                .into(img);*/
-        where.setText(serviceInfo.mLocation);
+        title.setText(serviceInfo.getTitle());
+        Picasso.with(this).load("http://ec2-13-124-108-18.ap-northeast-2.compute.amazonaws.com/mobile5/" + serviceInfo.getImageUrl()).into(img);
+        where.setText(serviceInfo.getLocation());
         //point.setText(serviceInfo.mPointPerHour);
-        info.setText(serviceInfo.mDetail);
+        info.setText(serviceInfo.getDetail());
     }
 
-    public class ServiceDTO {
-        private int mId;
-        private String mTitle;
-        private String mLocation;
-        private int mPointPerHour;
-        private String mDetail;
-        private String mImageUrl;
-        private boolean mStete;
-
-        public ServiceDTO() {
-            this(-1, null, null, -1, null, null, false);
-        }
-
-        public ServiceDTO(int id, String title, String location, int pointPerHour, String detail, String imageUrl, boolean state) {
-            mId = id;
-            mTitle = title;
-            mLocation = location;
-            mPointPerHour = pointPerHour;
-            mDetail = detail;
-            mImageUrl = imageUrl;
-            mStete = state;
-        }
-    }
 }
