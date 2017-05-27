@@ -9,13 +9,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MyInfoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".VoluntaryListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".VoluntaryDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".DonationListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".DonationDetailActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
