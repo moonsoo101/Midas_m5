@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.mobile5.midas.midas_m5.R;
 import com.mobile5.midas.midas_m5.Util.BitmapDownloaderTask;
+import com.mobile5.midas.midas_m5.dto.DonationDTO;
+import com.mobile5.midas.midas_m5.dto.MyDonationDTO;
 import com.mobile5.midas.midas_m5.dto.MyListDTO;
 
 import java.util.List;
@@ -20,16 +22,16 @@ import java.util.List;
 /**
  * Created by wisebody on 2016. 8. 2..
  */
-public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder> {
+public class MyDonationListAdapter extends RecyclerView.Adapter<MyDonationListAdapter.ViewHolder> {
 
-    private List<MyListDTO> items;
+    private List<MyDonationDTO> items;
     private int itemLayout;
     Context context;
     ViewHolder viewHolder;
 
 
 
-    public MyListAdapter(List<MyListDTO> items, int itemLayout) {
+    public MyDonationListAdapter(List<MyDonationDTO> items, int itemLayout) {
         this.items = items;
         this.itemLayout = itemLayout;
 
@@ -47,15 +49,15 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        MyListDTO item = items.get(position);
-        holder.title.setText(item.getmTitle());
-        holder.point.setText(Integer.toString(item.getmPoint())+"P");
+        MyDonationDTO item = items.get(position);
+        holder.title.setText(item.getTitle());
+        holder.point.setText(Integer.toString(item.getMyPoint())+"P");
 //        double num = Double.parseDouble(item.getGold());
 //        DecimalFormat df = new DecimalFormat("#,##0");
 //        holder.gold.setText("Gold " + df.format(num).toString());
         holder.progressBar.setVisibility(View.VISIBLE);
         holder.bitmapDownloaderTask = new BitmapDownloaderTask(holder.thumb,holder.progressBar,context);
-        holder.bitmapDownloaderTask.download("http://ec2-13-124-108-18.ap-northeast-2.compute.amazonaws.com/mobile5/"+item.getmImageUrl(),holder.thumb);
+        holder.bitmapDownloaderTask.download("http://ec2-13-124-108-18.ap-northeast-2.compute.amazonaws.com/mobile5/"+item.getImageUrl(),holder.thumb);
         holder.thumb.setColorFilter(Color.parseColor("#88000000"));
     }
 
