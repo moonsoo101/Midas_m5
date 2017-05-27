@@ -47,11 +47,15 @@ public class DonationArrayAdapter extends ArrayAdapter<DonationDTO> {
         TextView state = (TextView) v.findViewById(R.id.donation_state);
         if (item != null) {
             Picasso.with(mContext).load("http://ec2-13-124-108-18.ap-northeast-2.compute.amazonaws.com/mobile5/" + item.getImageUrl()).into(image);
-            image.setColorFilter(Color.parseColor("#77000000"));
+            if (item.getState()) {
+                image.setColorFilter(Color.parseColor("#55000000"));
+            } else {
+                image.setColorFilter(Color.parseColor("#CC000000"));
+            }
             title.setText(item.getTitle());
-            location.setText(item.getLocation());
-            point.setText(String.valueOf(item.getTotalPoint()));
-            state.setText(item.getState() ? "진행중" : "종료");
+            location.setText("지역 : " + item.getLocation());
+            point.setText("모금된 포인트 : " +  String.valueOf(item.getTotalPoint()) + " point");
+            state.setText(item.getState() ? " (진행중)" : " (종료)");
         }
         return v;
     }

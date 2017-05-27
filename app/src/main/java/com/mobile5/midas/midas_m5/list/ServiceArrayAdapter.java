@@ -48,12 +48,16 @@ public class ServiceArrayAdapter extends ArrayAdapter<ServiceDTO> {
         TextView detail = (TextView) v.findViewById(R.id.service_detail);
         if (item != null) {
             Picasso.with(mContext).load("http://ec2-13-124-108-18.ap-northeast-2.compute.amazonaws.com/mobile5/" + item.getImageUrl()).into(image);
-            image.setColorFilter(Color.parseColor("#77000000"));
+            if (item.getState()) {
+                image.setColorFilter(Color.parseColor("#55000000"));
+            } else {
+                image.setColorFilter(Color.parseColor("#CC000000"));
+            }
             title.setText(item.getTitle());
-            location.setText(item.getLocation());
-            point.setText(String.valueOf(item.getPointPerHour()));
-            state.setText(item.getState() ? "진행중" : "종료");
-            detail.setText(item.getDetail());
+            location.setText("지역 : " + item.getLocation());
+            point.setText("시간 당 " + String.valueOf(item.getPointPerHour()) + " point");
+            state.setText(item.getState() ? " (진행중)" : " (종료)");
+            detail.setText("상세 내용 : " + item.getDetail());
         }
         return v;
     }

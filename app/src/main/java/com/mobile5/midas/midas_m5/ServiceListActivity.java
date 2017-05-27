@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -97,9 +99,13 @@ public class ServiceListActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             ServiceDTO item = mServiceList.get(position);
-            Intent intent = new Intent(ServiceListActivity.this, ServiceDetailActivity.class);
-            intent.putExtra("item", item);
-            startActivity(intent);
+            if (item.getState()) {
+                Intent intent = new Intent(ServiceListActivity.this, ServiceDetailActivity.class);
+                intent.putExtra("item", item);
+                startActivity(intent);
+            } else {
+                Toast.makeText(ServiceListActivity.this, "종료된 봉사활동입니다.", Toast.LENGTH_SHORT).show();
+            }
         }
     };
 

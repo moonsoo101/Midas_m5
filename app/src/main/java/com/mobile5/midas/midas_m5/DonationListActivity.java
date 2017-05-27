@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.mobile5.midas.midas_m5.DB.DB;
 import com.mobile5.midas.midas_m5.dto.DonationDTO;
@@ -85,9 +86,13 @@ public class DonationListActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             DonationDTO item = mDonationList.get(position);
-            Intent intent = new Intent(DonationListActivity.this, DonationDetailActivity.class);
-            intent.putExtra("item", item);
-            startActivity(intent);
+            if (item.getState()) {
+                Intent intent = new Intent(DonationListActivity.this, DonationDetailActivity.class);
+                intent.putExtra("item", item);
+                startActivity(intent);
+            } else {
+                Toast.makeText(DonationListActivity.this, "종료된 기부활동입니다.", Toast.LENGTH_SHORT).show();
+            }
         }
     };
 
