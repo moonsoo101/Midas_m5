@@ -2,16 +2,18 @@ package com.mobile5.midas.midas_m5.dto;
 
 public class DonationDTO {
     private int mId;
-    private String mPlaceName;
+    private String mTitle;
+    private String mLocation;
     private String mImageUrl;
     private int mTotalPoint;
 
     public DonationDTO() {
-        this(-1, null, null, -1);
+        this(-1, null, null, null, -1);
     }
-    public DonationDTO(int id, String placeName, String imageUrl, int totalPoint) {
+    public DonationDTO(int id, String title, String location, String imageUrl, int totalPoint) {
         mId = id;
-        mPlaceName = placeName;
+        mTitle = title;
+        mLocation = location;
         mImageUrl = imageUrl;
         mTotalPoint = totalPoint;
     }
@@ -23,11 +25,18 @@ public class DonationDTO {
         return mId;
     }
 
-    public void setPlaceName(String placeName) {
-        mPlaceName = placeName;
+    public void setTitle(String title) {
+        mTitle = title;
     }
-    public String getPlaceName() {
-        return mPlaceName;
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public void setLocation(String location) {
+        mLocation = location;
+    }
+    public String getLocation() {
+        return mLocation;
     }
 
     public void setImageUrl(String imageUrl) {

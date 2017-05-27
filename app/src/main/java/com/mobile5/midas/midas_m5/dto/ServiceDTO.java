@@ -2,18 +2,20 @@ package com.mobile5.midas.midas_m5.dto;
 
 public class ServiceDTO {
     private int mId;
-    private String mPlaceName;
+    private String mTitle;
+    private String mLocation;
     private int mPointPerHour;
     private String mDetail;
     private String mImageUrl;
     private boolean mStete;
 
     public ServiceDTO() {
-        this(-1, null, -1, null, null, false);
+        this(-1, null, null, -1, null, null, false);
     }
-    public ServiceDTO(int id, String placeName, int pointPerHour, String detail, String imageUrl, boolean state) {
+    public ServiceDTO(int id, String title, String location, int pointPerHour, String detail, String imageUrl, boolean state) {
         mId = id;
-        mPlaceName = placeName;
+        mTitle = title;
+        mLocation = location;
         mPointPerHour = pointPerHour;
         mDetail = detail;
         mImageUrl = imageUrl;
@@ -27,11 +29,18 @@ public class ServiceDTO {
         return mId;
     }
 
-    public void setPlaceName(String placeName) {
-        mPlaceName = placeName;
+    public void setTitle(String title) {
+        mTitle = title;
     }
-    public String getPlaceName() {
-        return mPlaceName;
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public void setLocation(String location) {
+        mLocation = location;
+    }
+    public String getLocation() {
+        return mLocation;
     }
 
     public void setPointPerHour(int pointPerHour) {
