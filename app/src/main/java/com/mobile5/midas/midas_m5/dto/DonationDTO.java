@@ -8,6 +8,7 @@ public class DonationDTO implements Serializable{
     private String mLocation;
     private String mImageUrl;
     private int mTotalPoint;
+    private boolean mState;
 
     public DonationDTO() {
         this(-1, null, null, null, -1);
@@ -18,6 +19,15 @@ public class DonationDTO implements Serializable{
         mLocation = location;
         mImageUrl = imageUrl;
         mTotalPoint = totalPoint;
+        mState = true;
+    }
+    public DonationDTO(int id, String title, String location, String imageUrl, int totalPoint, boolean state) {
+        mId = id;
+        mTitle = title;
+        mLocation = location;
+        mImageUrl = imageUrl;
+        mTotalPoint = totalPoint;
+        mState = state;
     }
 
     public void setId(int id) {
@@ -53,5 +63,12 @@ public class DonationDTO implements Serializable{
     }
     public int getTotalPoint() {
         return mTotalPoint;
+    }
+
+    public void setState(boolean state) {
+        mState = state;
+    }
+    public boolean getState() {
+        return mState;
     }
 }
