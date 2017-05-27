@@ -1,0 +1,12 @@
+.DS_Store
+/captures
+.externalNativeBuild
+*.iml
+*.iws
+*.ipr
+.idea
+.gradle
+/local.properties
+/build
+*~
+*.swp
