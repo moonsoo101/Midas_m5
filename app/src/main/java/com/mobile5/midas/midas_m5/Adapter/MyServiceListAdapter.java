@@ -49,7 +49,6 @@ public class MyServiceListAdapter extends RecyclerView.Adapter<MyServiceListAdap
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         MyListDTO item = items.get(position);
         holder.title.setText(item.getmTitle());
-        holder.point.setText(Integer.toString(item.getmPoint())+"P");
 //        double num = Double.parseDouble(item.getGold());
 //        DecimalFormat df = new DecimalFormat("#,##0");
 //        holder.gold.setText("Gold " + df.format(num).toString());

@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/refresh"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#ffffff">
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +21,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/userName"
-            android:text="정문수"
             android:textSize="25sp"
             android:textColor="#de000000"/>
         <TextView
@@ -24,8 +28,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/companyNum"
             android:textColor="#4c000000"
-            android:textSize="15sp"
-            android:text="201701"/>
+            android:textSize="15sp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,7 +42,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/myPoint"
             android:layout_toRightOf="@+id/pointT"
-            android:text="2000p"
             android:textSize="15sp"
             android:textColor="#4c000000" />
     </LinearLayout>
@@ -103,4 +105,17 @@
         android:layout_height="100dp"
         android:id="@+id/myDonationList"
         android:layout_below="@+id/myDonationListTitle"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/logout_Btn"
+        android:textSize="16sp"
+        android:layout_gravity="center"
+        android:text="로그아웃"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:background="#16afca"
+        android:layout_alignParentBottom="true"
+        style="?android:attr/borderlessButtonStyle"/>
     </RelativeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

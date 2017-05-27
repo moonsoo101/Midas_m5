@@ -3,10 +3,12 @@ package com.mobile5.midas.midas_m5;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.mobile5.midas.midas_m5.Adapter.MyDonationListAdapter;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 
 public class MyInfoActivity extends AppCompatActivity {
     TextView userName, companyNum, myPoint ;
+    Button logout_Btn;
     RecyclerView myServiceList;
     MyServiceListAdapter myServiceListAdapter;
     LinearLayoutManager myServiceListManager;
@@ -33,16 +36,19 @@ public class MyInfoActivity extends AppCompatActivity {
     MyDonationListAdapter myDonationListAdapter;
     LinearLayoutManager myDonationListManager;
     ArrayList<MyDonationDTO> myDonationListDTOs = new ArrayList<>();
-
+    SwipeRefreshLayout swipeRefreshLayout;
+    boolean[] loaded;
     String id;
     String pass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_info);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
         userName = (TextView) findViewById(R.id.userName);
         companyNum = (TextView) findViewById(R.id.companyNum);
         myPoint = (TextView) findViewById(R.id.myPoint);
+        logout_Btn = (Button) findViewById(R.id.logout_Btn);
         myServiceList = (RecyclerView) findViewById(R.id.myServiceList);
         myServiceListAdapter = new MyServiceListAdapter(myServiceListDTOs,R.layout.mylist_item);
         myServiceListManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -60,6 +66,14 @@ public class MyInfoActivity extends AppCompatActivity {
         searchMyService(id);
         searchMyDonation(id);
         searchMyInfo(id, pass);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                searchMyService(id);
+                searchMyDonation(id);
+                searchMyInfo(id, pass);
+            }
+        });
     }
     protected void showMyInfo(String jsonResult){
         try {
@@ -106,7 +120,6 @@ public class MyInfoActivity extends AppCompatActivity {
                 for (int i = 0; i < posts.length(); i++) {
                     JSONObject c = posts.getJSONObject(i);
                     title[i] = c.getString("Title");
-                    point[i] = Integer.parseInt(c.getString("Point"));
                     imgURL[i] = c.getString("Img");
                     serviceID[i] = Integer.parseInt(c.getString("ServiceID"));
                     location[i] = c.getString("Location");
@@ -116,6 +129,7 @@ public class MyInfoActivity extends AppCompatActivity {
                     myServiceListDTOs.add(new MyListDTO(serviceID[i],title[i], point[i], imgURL[i], location[i], description[i], state[i]));
                 }
             }
+            swipeRefreshLayout.setRefreshing(false);
             myServiceListAdapter.notifyDataSetChanged();
         }
         catch (JSONException e)
