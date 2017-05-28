@@ -59,6 +59,12 @@ public class DonationListActivity extends AppCompatActivity {
         btn4.setOnClickListener(mOnClickListener);
 
         new GetServiceList().execute();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mDonationArrayAdapter.clear();
         new GetDonationList().execute();
     }
 

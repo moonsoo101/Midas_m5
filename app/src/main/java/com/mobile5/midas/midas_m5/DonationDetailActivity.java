@@ -72,6 +72,8 @@ public class DonationDetailActivity extends AppCompatActivity  implements View.O
                 if(s.equals("거지")) {
                     Toast.makeText(getApplicationContext(),"포인트가 부족합니다.",Toast.LENGTH_SHORT).show();
                 }else {
+                    int curPoint = Integer.parseInt(totalPoint.getText().toString());
+                    totalPoint.setText(String.valueOf(curPoint + Integer.parseInt(Point)));
                     Toast.makeText(getApplicationContext(),Point+" 포인트를 기부하였습니다.",Toast.LENGTH_SHORT).show();
                 }
 
